@@ -1,0 +1,11 @@
+# generate gitignore file content
+
+.DS_Store
+.env
+.vscode
+
+
+
+
+
+
