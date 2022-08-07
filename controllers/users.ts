@@ -14,16 +14,26 @@ const getUsers = async (ctx: Context) => {
       "SELECT * FROM users",
     );
 
-    const users: User[] = [];
+    let users: User[] = [];
 
-    result.rows.map((user: User) => {
-      users.push(user);
+    result.rows.map((user) => {
+      users = [...users, user];
     });
-    ctx.response.body = {
-      users,
-      success: true,
-      noData: false,
-    };
+
+    if (users.length > 0) {
+      ctx.response.body = {
+        users,
+        success: true,
+        noData: false,
+      };
+    } else {
+      ctx.response.body = {
+        users,
+        success: true,
+        noData: true,
+      };
+    }
+
     console.log(ctx.response.body);
   } catch (err) {
     ctx.response.status = 500;
