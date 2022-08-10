@@ -7,7 +7,7 @@ const app = new Application();
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-const PORT = Deno.env.get("PORT") || 8081;
+const PORT = Deno.env.get("PORT") || 8082;
 
 console.log(`Server running on port ${PORT} `);
 
