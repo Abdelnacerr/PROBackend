@@ -1,8 +1,19 @@
 import { Router } from "https://deno.land/x/oak@v10.6.0/mod.ts";
-import { getUserById, getUsers } from "../controllers/users.ts";
+import {
+  addUser,
+  deleteUser,
+  getUserById,
+  getUsers,
+  updateUser,
+} from "../controllers/users.ts";
 
 const router = new Router();
 
-router.get("/users", getUsers).get("/users/:id", getUserById);
+router
+  .post("/users", addUser)
+  .get("/users", getUsers)
+  .get("/users/:id", getUserById)
+  .put("/users/:id", updateUser)
+  .delete("/users/:id", deleteUser);
 
 export default router;
