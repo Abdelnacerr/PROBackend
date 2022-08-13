@@ -8,7 +8,8 @@ const getUsers = async (ctx: Context) => {
     await client.connect();
 
     const result: QueryObjectResult<User> = await client.queryObject(
-      "SELECT * FROM users",
+      `SELECT * FROM users WHERE "isDeleted"=$1`,
+      ["0"],
     );
 
     const records: User[] = result.rows;
@@ -36,17 +37,15 @@ const getUsers = async (ctx: Context) => {
   }
 };
 
-const getUserById = async (
-  ctx: Context,
-) => {
+const getUserById = async (ctx: Context) => {
   try {
     await client.connect();
 
     const id = ctx.request.url.pathname.split("/")[2];
 
     const result: QueryObjectResult<User> = await client.queryObject(
-      "SELECT * FROM users WHERE id = $1",
-      [id],
+      `SELECT * FROM users WHERE id=$1 AND "isDeleted"=$2`,
+      [id, "FALSE"],
     );
 
     if (result.rows.toString() === "") {
@@ -58,14 +57,17 @@ const getUserById = async (
       return;
     } else {
       const user = {} as User;
+
       result.rows.map((row) => {
         user.id = row.id;
         user.mobile = row.mobile;
+        user.isDeleted = row.isDeleted;
       });
+
       ctx.response.status = 200;
       ctx.response.body = {
         success: true,
-        records: user,
+        record: user,
       };
     }
   } catch (err) {
@@ -79,9 +81,7 @@ const getUserById = async (
   }
 };
 
-const addUser = async (
-  ctx: Context,
-) => {
+const addUser = async (ctx: Context) => {
   const body = ctx.request.body();
   const user: User = await body.value;
 
@@ -107,19 +107,24 @@ const addUser = async (
       };
     } catch (err) {
       ctx.response.status = 500;
-      ctx.response.body = {
-        success: false,
-        msg: err.toString(),
-      };
+      if (err.toString().includes("duplicate key value")) {
+        ctx.response.body = {
+          msg: "User with the same mobile number already exists",
+          success: false,
+        };
+      } else {
+        ctx.response.body = {
+          success: false,
+          msg: err.toString(),
+        };
+      }
     } finally {
       await client.end();
     }
   }
 };
 
-const updateUser = async (
-  ctx: Context,
-) => {
+const updateUser = async (ctx: Context) => {
   await getUserById(ctx);
 
   if (ctx.response.status === 404) {
@@ -143,10 +148,11 @@ const updateUser = async (
         await client.connect();
 
         await client.queryObject(
-          "UPDATE users SET mobile=$1 WHERE id=$2",
+          `UPDATE users SET mobile=$1 WHERE id=$2 AND "isDeleted"=$3`,
           [
             user.mobile,
             id,
+            "FALSE",
           ],
         );
 
@@ -154,6 +160,7 @@ const updateUser = async (
         ctx.response.body = {
           id: id,
           mobile: user.mobile,
+          isDeleted: false,
         };
       } catch (err) {
         ctx.response.status = 500;
@@ -168,16 +175,11 @@ const updateUser = async (
   }
 };
 
-const deleteUser = async (
-  ctx: Context,
-) => {
+const deleteUser = async (ctx: Context) => {
   await getUserById(ctx);
 
   if (ctx.response.status === 404) {
-    ctx.response.body = {
-      success: false,
-      msg: ctx.response.body,
-    };
+    ctx.response.body = { success: false, msg: ctx.response.body };
     ctx.response.status = 404;
     return;
   } else {
@@ -186,8 +188,8 @@ const deleteUser = async (
       const id: string = ctx.request.url.pathname.split("/")[2];
 
       await client.queryObject(
-        "DELETE FROM users WHERE id=$1",
-        [id],
+        `UPDATE users SET "isDeleted"=$1 WHERE id=$2`,
+        ["1", id],
       );
 
       ctx.response.body = {
