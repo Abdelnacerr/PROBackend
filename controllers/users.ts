@@ -1,7 +1,6 @@
-import { QueryObjectResult } from "https://deno.land/x/postgres@v0.15.0/query/query.ts";
-import { Context } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { User } from "../models/user.ts";
 import client from "../config.ts";
+import { Context, QueryObjectResult } from "../deps.ts";
 
 const getUsers = async (ctx: Context) => {
   try {
@@ -9,7 +8,7 @@ const getUsers = async (ctx: Context) => {
 
     const result: QueryObjectResult<User> = await client.queryObject(
       `SELECT * FROM users WHERE "isDeleted"=$1`,
-      ["0"],
+      ["FALSE"],
     );
 
     const records: User[] = result.rows;
@@ -41,7 +40,7 @@ const getUserById = async (ctx: Context) => {
   try {
     await client.connect();
 
-    const id = ctx.request.url.pathname.split("/")[2];
+    const id = ctx.request.url.pathname.split("/")[3];
 
     const result: QueryObjectResult<User> = await client.queryObject(
       `SELECT * FROM users WHERE id=$1 AND "isDeleted"=$2`,
@@ -89,7 +88,7 @@ const addUser = async (ctx: Context) => {
     ctx.response.status = 400;
     ctx.response.body = {
       success: false,
-      msg: "No Data",
+      msg: "No Data in the body.!",
     };
   } else {
     try {
@@ -134,7 +133,7 @@ const updateUser = async (ctx: Context) => {
     };
     return;
   } else {
-    const id: string = ctx.request.url.pathname.split("/")[2];
+    const id: string = ctx.request.url.pathname.split("/")[3];
     const user: User = await ctx.request.body().value;
 
     if (!ctx.request.hasBody) {
@@ -185,11 +184,11 @@ const deleteUser = async (ctx: Context) => {
   } else {
     try {
       await client.connect();
-      const id: string = ctx.request.url.pathname.split("/")[2];
+      const id: string = ctx.request.url.pathname.split("/")[3];
 
       await client.queryObject(
         `UPDATE users SET "isDeleted"=$1 WHERE id=$2`,
-        ["1", id],
+        ["TRUE", id],
       );
 
       ctx.response.body = {

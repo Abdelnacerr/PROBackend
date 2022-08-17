@@ -1,4 +1,3 @@
-import { Router } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import {
   addUser,
   deleteUser,
@@ -7,13 +6,20 @@ import {
   updateUser,
 } from "../controllers/users.ts";
 
+import login from "../controllers/login.ts";
+import authMiddleware from "../middleWares/authMiddleware.ts";
+import { Router } from "../deps.ts";
+import { logout } from "../controllers/logout.ts";
+
 const router = new Router();
 
 router
-  .post("/users", addUser)
-  .get("/users", getUsers)
-  .get("/users/:id", getUserById)
-  .put("/users/:id", updateUser)
-  .delete("/users/:id", deleteUser);
+  .post("/api/login", login)
+  .post("/api/logout", logout)
+  .post("/api/users", authMiddleware, addUser)
+  .get("/api/users", authMiddleware, getUsers)
+  .get("/api/users/:id", authMiddleware, getUserById)
+  .put("/api/users/:id", authMiddleware, updateUser)
+  .delete("/api/users/:id", authMiddleware, deleteUser);
 
 export default router;
