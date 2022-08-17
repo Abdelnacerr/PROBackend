@@ -8,3 +8,11 @@ export { Client } from "https://deno.land/x/postgres@v0.15.0/mod.ts";
 export { verify } from "https://deno.land/x/djwt@v2.7/mod.ts";
 export { QueryObjectResult } from "https://deno.land/x/postgres@v0.15.0/query/query.ts";
 export { getNumericDate } from "https://deno.land/x/djwt@v2.7/mod.ts";
+export * as base64 from "https://denopkg.com/chiefbiiko/base64/mod.ts";
+export {
+  distinct,
+  flatMap,
+  takeUntil,
+  takeWhile,
+} from "https://cdn.skypack.dev/rxjs/operators";
+export { from, timer } from "https://cdn.skypack.dev/rxjs";

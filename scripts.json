@@ -3,7 +3,7 @@
   "scripts": {
     "start": {
       "cmd": "deno run server.ts",
-      "desc": "run my app.ts file",
+      "desc": "run my server.ts file",
       "allow": ["env", "net", "read"]
     }
   }
