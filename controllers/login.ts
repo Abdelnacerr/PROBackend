@@ -28,8 +28,6 @@ const login = async (ctx: Context) => {
     const body = ctx.request.body();
     const user: User = await body.value;
     await addUser(ctx);
-    //if user is marked as deleted, but comes back to sign in again, mark as not deleted and reactivate account.
-    //reactivate account route to be done. Future feature
 
     try {
       await client.connect();
@@ -57,7 +55,7 @@ const login = async (ctx: Context) => {
           };
           console.log(ctx.cookies.get("jwt"));
         } else {
-          ctx.response.status = 500;
+          ctx.response.status = 401;
           ctx.response.body = {
             success: false,
             msg: "Error creating JWT",

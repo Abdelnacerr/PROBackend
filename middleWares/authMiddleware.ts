@@ -18,9 +18,9 @@ const authMiddleware = async (ctx: Context, next: () => Promise<unknown>) => {
   }
 
   const jwt = authorization.split(" ")[1];
-  const decodedJWT = await verify(cookies, jwtKey);
+  const decodedJWT = await verify(jwt, jwtKey);
 
-  if (await verify(jwt, jwtKey) || decodedJWT) {
+  if (decodedJWT && cookies) {
     ctx.response.body = {
       success: true,
       msg: "Auth successful",
