@@ -45,7 +45,10 @@ const login = async (ctx: Context) => {
         };
 
         const jwt = await createToken(header, payload, jwtKey);
-        await ctx.cookies.set("jwt", jwt, { httpOnly: true });
+        await ctx.cookies.set("jwt", jwt, {
+          httpOnly: true,
+          sameSite: "strict",
+        });
 
         if (jwt) {
           ctx.response.status = 200;
