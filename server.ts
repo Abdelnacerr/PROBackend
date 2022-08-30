@@ -12,3 +12,6 @@ const PORT = Deno.env.get("PORT") || 8082;
 console.log(`Server running on port ${PORT} `);
 
 await app.listen({ port: +PORT });
+
+//deno run --allow-env --allow-net --allow-read twilioSendSms.ts
+// denon run --allow-net --allow-env --allow-read server.ts

@@ -15,10 +15,7 @@ const getUsers = async (ctx: Context) => {
 
     if (records.length > 0) {
       ctx.response.status = 200;
-      ctx.response.body = {
-        success: true,
-        records,
-      };
+      ctx.response.body = records;
     } else {
       ctx.response.body = {
         success: false,

@@ -32,16 +32,16 @@ const login = async (ctx: Context) => {
     try {
       await client.connect();
 
-      const result2 = await client.queryArray(
+      const result = await client.queryArray(
         `SELECT * FROM users WHERE mobile = $1 AND "isDeleted"=$2`,
         [user.mobile, "0"],
       );
 
-      if (result2.rows.length > 0) {
+      if (result.rows.length > 0) {
         //1. send sms via twilio
         const payload: Payload = {
           iss: user.mobile,
-          exp: getNumericDate(60),
+          // exp: getNumericDate(60),
         };
 
         const jwt = await createToken(header, payload, jwtKey);
