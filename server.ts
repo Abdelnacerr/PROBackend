@@ -1,6 +1,6 @@
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
-import { Application } from "./deps.ts";
-import router from "./routes/routes.ts";
+import { Application } from "./src/deps.ts";
+import router from "./src/routes/routes.ts";
 
 const app = new Application();
 
