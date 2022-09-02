@@ -1,5 +1,5 @@
 import { User } from "../models/user.ts";
-import client from "../config.ts";
+import client from "../../config.ts";
 import { Context, QueryObjectResult } from "../deps.ts";
 
 const getUsers = async (ctx: Context) => {

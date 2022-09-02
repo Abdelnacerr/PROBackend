@@ -1,5 +1,5 @@
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
-import client from "../config.ts";
+import client from "../../config.ts";
 import { User } from "../models/user.ts";
 
 import { jwtKey } from "../middleWares/cryptoKey.ts";
@@ -7,7 +7,7 @@ import { addUser } from "./users.ts";
 import {
   Context,
   createToken,
-  getNumericDate,
+  // getNumericDate,
   Header,
   Payload,
 } from "../deps.ts";
@@ -39,6 +39,7 @@ const login = async (ctx: Context) => {
 
       if (result.rows.length > 0) {
         //1. send sms via twilio
+
         const payload: Payload = {
           iss: user.mobile,
           // exp: getNumericDate(60),
@@ -56,7 +57,6 @@ const login = async (ctx: Context) => {
             mobile: user.mobile,
             jwt,
           };
-          console.log(ctx.cookies.get("jwt"));
         } else {
           ctx.response.status = 401;
           ctx.response.body = {
