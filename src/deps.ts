@@ -16,3 +16,4 @@ export {
   takeWhile,
 } from "https://cdn.skypack.dev/rxjs/operators";
 export { from, timer } from "https://cdn.skypack.dev/rxjs";
+export { axiod } from "https://deno.land/x/axiod@0.26.1/mod.ts";
