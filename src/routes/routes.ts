@@ -10,7 +10,8 @@ import login from "../controllers/login.ts";
 import authMiddleware from "../middleWares/authMiddleware.ts";
 import { Router } from "../deps.ts";
 import { logout } from "../controllers/logout.ts";
-import { createFaceList } from "../services/AzurefaceApi/faceList.ts";
+import createCollection from "../controllers/createAwsCollection.ts";
+import indexFaces from "../controllers/indexFaces.ts";
 
 const router = new Router();
 
@@ -22,6 +23,7 @@ router
   .get("/api/users/:id", authMiddleware, getUserById)
   .put("/api/users/:id", authMiddleware, updateUser)
   .delete("/api/users/:id", authMiddleware, deleteUser)
-  .put("/api/createFaceList", createFaceList);
+  .get("/api/createCollection", createCollection)
+  .post("/api/indexFaces", indexFaces);
 
 export default router;
