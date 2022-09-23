@@ -1,10 +1,10 @@
 import { client } from "../../deps.ts";
 
 const apiFactory = new client.ApiFactory({
-  region: "ap-southeast-2",
+  region: Deno.env.get("AWS_REGION")!,
   credentials: {
-    awsAccessKeyId: "AKIAZDEAL7GQS3MBZVAU",
-    awsSecretKey: "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",
+    awsAccessKeyId: Deno.env.get("AWS_ACCESS_KEY_ID")!,
+    awsSecretKey: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
   },
 });
 

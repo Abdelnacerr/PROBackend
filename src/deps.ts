@@ -24,14 +24,13 @@ export * as client from "https://deno.land/x/aws_api@v0.7.0/client/mod.ts";
 export * as jsonP from "https://deno.land/x/aws_api@v0.7.0/encoding/json.ts";
 export { Rekognition } from "https://aws-api.deno.dev/v0.3/services/rekognition.ts";
 export type {
-  Image,
-  S3Object,
-} from "https://aws-api.deno.dev/v0.3/services/rekognition.ts";
-export type {
   CreateCollectionRequest,
   CreateCollectionResponse,
   IndexFacesRequest,
   IndexFacesResponse,
   OrientationCorrection,
+  Image,
+  S3Object,
 } from "https://aws-api.deno.dev/v0.3/services/rekognition.ts";
 export * as cmnP from "https://deno.land/x/aws_api@v0.7.0/encoding/common.ts";
+export { S3, S3Bucket } from "https://deno.land/x/s3@0.5.0/mod.ts";
