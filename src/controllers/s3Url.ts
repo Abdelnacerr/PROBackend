@@ -1,5 +1,4 @@
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
-
 import { Context, getSignedUrl } from "../deps.ts";
 
 const getS3Url = (ctx: Context) => {
