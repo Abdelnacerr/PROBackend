@@ -26,11 +26,12 @@ export { Rekognition } from "https://aws-api.deno.dev/v0.3/services/rekognition.
 export type {
   CreateCollectionRequest,
   CreateCollectionResponse,
+  Image,
   IndexFacesRequest,
   IndexFacesResponse,
   OrientationCorrection,
-  Image,
   S3Object,
 } from "https://aws-api.deno.dev/v0.3/services/rekognition.ts";
 export * as cmnP from "https://deno.land/x/aws_api@v0.7.0/encoding/common.ts";
 export { S3, S3Bucket } from "https://deno.land/x/s3@0.5.0/mod.ts";
+export { getSignedUrl } from "https://deno.land/x/aws_s3_presign@1.3.0/mod.ts";

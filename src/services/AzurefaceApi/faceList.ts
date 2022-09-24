@@ -65,8 +65,12 @@ const addFacesToFaceList = async (ctx: Context) => {
       data: response.data,
     };
   } catch (err) {
-    console.log("err: ", err);
-    // res.send("not ok");
+    ctx.response.status = err.status;
+    ctx.response.body = {
+      success: false,
+      msg: "Error adding face to facelist, " + err.message,
+      data: err,
+    };
   }
 };
 

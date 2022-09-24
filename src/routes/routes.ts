@@ -12,14 +12,16 @@ import { Router } from "../deps.ts";
 import { logout } from "../controllers/logout.ts";
 import createCollection from "../controllers/createAwsCollection.ts";
 import indexFaces from "../controllers/indexFaces.ts";
+import getS3Url from "../controllers/s3Url.ts";
 
 const router = new Router();
 
 router
   .post("/api/login", login)
   .post("/api/logout", logout)
+  .get("/api/getS3Url", getS3Url)
   .post("/api/users", authMiddleware, addUser)
-  .get("/api/users", authMiddleware, getUsers)
+  .get("/api/users", getUsers)
   .get("/api/users/:id", authMiddleware, getUserById)
   .put("/api/users/:id", authMiddleware, updateUser)
   .delete("/api/users/:id", authMiddleware, deleteUser)
