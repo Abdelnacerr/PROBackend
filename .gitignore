@@ -8,8 +8,5 @@ config.ts
 /deps
 /registries
 questions.ts
-
-
-
-
-
+src/services/aws/apiFactory.ts
+.gitignore
