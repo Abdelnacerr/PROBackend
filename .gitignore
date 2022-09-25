@@ -9,4 +9,3 @@ config.ts
 /registries
 questions.ts
 src/services/aws/apiFactory.ts
-.gitignore
