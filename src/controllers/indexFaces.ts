@@ -5,7 +5,7 @@ import { Rekognition } from "../services/aws/rekognitionClass.ts";
 const indexFaces = async (ctx: Context) => {
   const body = ctx.request.body();
   const image: S3Object = await body.value;
-  const collectionId = Deno.env.get("collectionId") || "";
+  const collectionId = Deno.env.get("collectionId")!;
 
   try {
     const rekognition = new Rekognition(apiFactory);
