@@ -20,7 +20,7 @@ const router = new Router();
 router
   .post("/api/login", login)
   .post("/api/logout", logout)
-  .put("/api/getS3Url/:fileName", getS3Url)
+  .get("/api/getS3Url/:fileName", getS3Url)
   .post("/api/users", authMiddleware, addUser)
   .get("/api/users", getUsers)
   .get("/api/users/:id", authMiddleware, getUserById)
