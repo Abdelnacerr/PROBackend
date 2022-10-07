@@ -21,9 +21,7 @@ const getS3Url = (ctx: Context) => {
         method: "PUT",
       });
       ctx.response.status = 200;
-      ctx.response.body = {
-        url,
-      };
+      ctx.response.body = JSON.stringify(url);
     } catch (err) {
       ctx.response.status = 500;
       ctx.response.body = {
