@@ -17,15 +17,15 @@ const searchFacesByImage = async (ctx: Context) => {
         },
       },
     });
-    const filteredResult = searchFacesByImage?.FaceMatches?.filter(
+    const FaceMatches = searchFacesByImage?.FaceMatches?.filter(
       (faceMatch) => faceMatch?.Similarity! > 80,
     );
-    const matchedFaceURl = filteredResult?.map((faceMatch) => {
+    const matchedFaceURl = FaceMatches?.map((faceMatch) => {
       const faceId = faceMatch?.Face?.FaceId;
       return `https://s3.amazonaws.com/${image.Bucket}/${image.Name}?faceId=${faceId}`;
     });
     ctx.response.body = {
-      filteredResult,
+      FaceMatches,
       matchedFaceURl,
     };
   } catch (error) {
