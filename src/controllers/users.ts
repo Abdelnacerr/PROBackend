@@ -58,7 +58,7 @@ const getUserById = async (ctx: Context) => {
         user.id = row.id;
         user.mobile = row.mobile;
         user.isDeleted = row.isDeleted;
-        user.typeId = row.typeId;
+        user.accountTypeId = row.accountTypeId;
       });
 
       ctx.response.status = 200;
@@ -145,11 +145,10 @@ const updateUser = async (ctx: Context) => {
         await client.connect();
 
         await client.queryObject(
-          //if user only provided a mobile, update only the mobile, if user only provided a typeId, update only the typeId, if user provided both, update both
-          `UPDATE users SET mobile=$1, "typeId"=$2 WHERE id=$3 AND "isDeleted"=$4`,
+          `UPDATE users SET mobile=$1, "accountTypeId"=$2 WHERE id=$3 AND "isDeleted"=$4`,
           [
             user.mobile,
-            user.typeId,
+            user.accountTypeId,
             id,
             "FALSE",
           ],
@@ -157,7 +156,7 @@ const updateUser = async (ctx: Context) => {
 
         ctx.response.status = 200;
         ctx.response.body = {
-          id: id,
+          id,
           mobile: user.mobile,
           isDeleted: false,
         };

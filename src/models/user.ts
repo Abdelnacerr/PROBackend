@@ -1,8 +1,9 @@
-import { UserType } from "./userType.ts";
+import { accountType } from "./accountType.ts";
 
-export interface User extends UserType {
+export interface User extends accountType {
   id: number;
   mobile: string;
+  isFirstLogin: boolean;
   isDeleted: boolean;
-  typeId: UserType["id"];
+  accountTypeId: accountType["id"];
 }
