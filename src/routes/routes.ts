@@ -14,6 +14,7 @@ import createCollection from "../controllers/createAwsCollection.ts";
 import indexFaces from "../controllers/indexFaces.ts";
 import getS3Url from "../controllers/s3Url.ts";
 import searchFacesByImage from "../controllers/searchFacesByImage.ts";
+import { getAccountTypes } from "../controllers/accountType.ts";
 
 const router = new Router();
 
@@ -28,6 +29,7 @@ router
   .delete("/api/users/:id", authMiddleware, deleteUser)
   .get("/api/createCollection", createCollection)
   .post("/api/indexFaces", indexFaces)
-  .post("/api/searchFacesByImage", searchFacesByImage);
+  .post("/api/searchFacesByImage", searchFacesByImage)
+  .get("/api/getAccountType", getAccountTypes);
 
 export default router;
