@@ -57,6 +57,10 @@ const login = async (ctx: Context) => {
             mobile: user.mobile,
             jwt,
           };
+          await client.queryObject(
+            `UPDATE users SET "isFirstLogin"=$1 WHERE mobile=$2`,
+            ["FALSE", user.mobile],
+          );
         } else {
           ctx.response.status = 401;
           ctx.response.body = {
