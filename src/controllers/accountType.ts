@@ -7,7 +7,7 @@ const getAccountTypes = async (ctx: Context) => {
     await client.connect();
 
     const result: QueryObjectResult<accountType> = await client.queryObject(
-      `SELECT * FROM "accountType" WHERE "isDeleted"=$1`,
+      `SELECT * FROM "accountType" WHERE "isDeleted"=$1 ORDER BY type ASC`,
       ["FALSE"],
     );
 

@@ -6,4 +6,5 @@ export interface User {
   isFirstLogin: boolean;
   isDeleted: boolean;
   accountType: accountType["id"];
+  createdWhen: Date;
 }

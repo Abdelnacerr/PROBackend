@@ -1,5 +1,6 @@
 export interface accountType {
   id: number;
-  accountType: string;
+  type: string;
   isDeleted: boolean;
+  createdWhen: Date;
 }
